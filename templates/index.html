@@ -1,22 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Fuzzy Prioritization</title>
+    <meta charset="UTF-8" />
+    <title>Fuzzy Prioritet - Više taskova</title>
+    <style>
+        .task {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+    </style>
 </head>
 <body>
-    <h2>Unesite podatke o zadatku</h2>
-    <form method="POST">
-        Urgency (0–10): <input name="urgency" type="number" min="0" max="10" required><br>
-        Impact (0–10): <input name="impact" type="number" min="0" max="10" required><br>
-        Team Availability (0–10): <input name="team_availability" type="number" min="0" max="10" required><br>
-        Similar Issues (0–10): <input name="past_similar_issue" type="number" min="0" max="10" required><br>
-        Delay Risk (0–10): <input name="delayed_risk" type="number" min="0" max="10" required><br><br>
-        <button type="submit">Izračunaj prioritet</button>
+    <h2>Unesite podatke o zadacima</h2>
+
+    <form method="post" autocomplete="off" id="tasksForm">
+        <div id="tasksContainer">
+            <div class="task">
+                <h3>Task 1</h3>
+                <label>Urgency (0–10):</label>
+                <input type="number" name="urgency" min="0" max="10" required><br><br>
+
+                <label>Impact (0–10):</label>
+                <input type="number" name="impact" min="0" max="10" required><br><br>
+
+                <label>Team Availability (0–10):</label>
+                <input type="number" name="team_availability" min="0" max="10" required><br><br>
+
+                <label>Delay Risk (0–10):</label>
+                <input type="number" name="delayed_risk" min="0" max="10" required><br><br>
+
+                <label>Resolution Difficulty (0–10):</label>
+                <input type="number" name="resolution_difficulty" min="0" max="10" required><br><br>
+
+                <label>Historical Impact (0–10):</label>
+                <input type="number" name="historical_impact" min="0" max="10" required><br><br>
+            </div>
+        </div>
+
+        <button type="button" id="addTaskBtn">Dodaj još jedan zadatak</button><br><br>
+        <button type="submit">Izračunaj prioritete</button>
     </form>
 
-    {% if result is not none %}
-        <h3>Predviđeni prioritet: {{ result }}</h3>
+    {% if results %}
+        <h2>Prioriteti zadataka (sortirano od najvažnijeg)</h2>
+        <ol>
+            {% for task in results %}
+                <li>Prioritet: {{ task.priority | round(2) }}</li>
+            {% endfor %}
+        </ol>
     {% endif %}
+
+<script>
+    const addTaskBtn = document.getElementById('addTaskBtn');
+    const tasksContainer = document.getElementById('tasksContainer');
+
+    addTaskBtn.addEventListener('click', () => {
+        const taskCount = tasksContainer.children.length + 1;
+
+        const newTask = document.createElement('div');
+        newTask.classList.add('task');
+        newTask.innerHTML = `
+            <h3>Task ${taskCount}</h3>
+            <label>Urgency (0–10):</label>
+            <input type="number" name="urgency" min="0" max="10" required><br><br>
+
+            <label>Impact (0–10):</label>
+            <input type="number" name="impact" min="0" max="10" required><br><br>
+
+            <label>Team Availability (0–10):</label>
+            <input type="number" name="team_availability" min="0" max="10" required><br><br>
+
+            <label>Delay Risk (0–10):</label>
+            <input type="number" name="delayed_risk" min="0" max="10" required><br><br>
+
+            <label>Resolution Difficulty (0–10):</label>
+            <input type="number" name="resolution_difficulty" min="0" max="10" required><br><br>
+
+            <label>Historical Impact (0–10):</label>
+            <input type="number" name="historical_impact" min="0" max="10" required><br><br>
+        `;
+
+        tasksContainer.appendChild(newTask);
+    });
+</script>
 </body>
 </html>
