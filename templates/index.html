@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fuzzy Prioritization</title>
+</head>
+<body>
+    <h2>Unesite podatke o zadatku</h2>
+    <form method="POST">
+        Urgency (0–10): <input name="urgency" type="number" min="0" max="10" required><br>
+        Impact (0–10): <input name="impact" type="number" min="0" max="10" required><br>
+        Team Availability (0–10): <input name="team_availability" type="number" min="0" max="10" required><br>
+        Similar Issues (0–10): <input name="past_similar_issue" type="number" min="0" max="10" required><br>
+        Delay Risk (0–10): <input name="delayed_risk" type="number" min="0" max="10" required><br><br>
+        <button type="submit">Izračunaj prioritet</button>
+    </form>
+
+    {% if result is not none %}
+        <h3>Predviđeni prioritet: {{ result }}</h3>
+    {% endif %}
+</body>
+</html>
