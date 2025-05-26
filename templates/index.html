@@ -1,23 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
     <meta charset="UTF-8" />
-    <title>Fuzzy Prioritet - Više taskova</title>
-    <style>
-        .task {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin-bottom: 15px;
-        }
-    </style>
 </head>
 <body>
-    <h2>Unesite podatke o zadacima</h2>
+    <div class="header-banner">
+        <h1>Mathematical Logic and Computability Theory</h1>
+        <h2>Fuzzy System for Prioritizing Business Tasks in a Software Company</h2>
+      </div>
+      
+    <h2>Brief descriptions for the task parameters:</h2>
+    <ul>
+        <li><strong>Urgency:</strong> How time-critical the task is. Low means it can be delayed without problems, high means it needs immediate attention.</li>
+        <li><strong>Impact:</strong> How much this task affects the functioning of the entire system. Low impact means minimal effect on the system; high impact means significant influence on system operation.</li>
+        <li><strong>Team Availability:</strong> How free the team is to work on the task. Low means team is busy; high means team can start right away.</li>
+        <li><strong>Delayed Risk:</strong> This means the risk caused if the task is delayed. Low risk means delay won’t cause problems; high risk means delay may lead to serious issues.</li>
+        <li><strong>Resolution Difficulty:</strong> How hard the task is to complete. Easy tasks need little effort; hard tasks require significant resources and time.</li>
+        <li><strong>Historical Impact:</strong> Past effects of similar tasks. Low means no big issues before; high means similar tasks caused serious problems.</li>
+    </ul>
+    <h2>Enter task data </h2>
 
     <form method="post" autocomplete="off" id="tasksForm">
         <div id="tasksContainer">
             <div class="task">
                 <h3>Task 1</h3>
+                <label>Task name:</label>
+                <input type="text" name="task_name" required><br><br>
+
                 <label>Urgency (0–10):</label>
                 <input type="number" name="urgency" min="0" max="10" required><br><br>
 
@@ -38,15 +49,15 @@
             </div>
         </div>
 
-        <button type="button" id="addTaskBtn">Dodaj još jedan zadatak</button><br><br>
-        <button type="submit">Izračunaj prioritete</button>
+        <button type="button" id="addTaskBtn">Add another task</button><br><br>
+        <button type="submit">Calculate Priorities</button>
     </form>
 
     {% if results %}
-        <h2>Prioriteti zadataka (sortirano od najvažnijeg)</h2>
+        <h2>Task Priorities (sorted from most important)</h2>
         <ol>
             {% for task in results %}
-                <li>Prioritet: {{ task.priority | round(2) }}</li>
+            <li>{{ task.name }} — Priority: {{ task.priority | round(2) }}</li>
             {% endfor %}
         </ol>
     {% endif %}
@@ -62,6 +73,8 @@
         newTask.classList.add('task');
         newTask.innerHTML = `
             <h3>Task ${taskCount}</h3>
+            <label>Task name:</label>
+            <input type="text" name="task_name" required><br><br>
             <label>Urgency (0–10):</label>
             <input type="number" name="urgency" min="0" max="10" required><br><br>
 

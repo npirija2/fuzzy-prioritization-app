@@ -14,6 +14,8 @@ def index():
         delayed_risks = request.form.getlist('delayed_risk')
         resolution_difficulties = request.form.getlist('resolution_difficulty')
         historical_impacts = request.form.getlist('historical_impact')
+        task_names = request.form.getlist('task_name')
+
 
         tasks = []
         for i in range(len(urgencies)):
@@ -25,7 +27,8 @@ def index():
             historical_impact = int(historical_impacts[i])
 
             priority = predict_priority(urgency, impact, team_availability, delayed_risk, resolution_difficulty, historical_impact)
-            tasks.append({'priority': priority})
+            tasks.append({'name': task_names[i], 'priority': priority})
+
 
         tasks_sorted = sorted(
             [task for task in tasks if task['priority'] is not None],
