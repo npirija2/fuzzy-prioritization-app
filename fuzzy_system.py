@@ -183,10 +183,9 @@ rule_fallback = ctrl.Rule(urgency['low'] & impact['moderate'] & team_availabilit
 
 
 priority_ctrl_system = ctrl.ControlSystem([
-    rule1, rule2, rule3, 
+    rule1, rule2, rule3, rule4, rule5,
     rule6, rule7, rule8, rule10,
     rule11, rule12, rule13,
-    rule_fallback,
     rule14, rule15, rule16, rule17, rule18, rule19, rule20,rule21,rule22,rule23
 ])
 
